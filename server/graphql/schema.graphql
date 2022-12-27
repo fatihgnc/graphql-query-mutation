@@ -1,8 +1,27 @@
 type Query {
-  user: User!
+  users: [User!]
+  jobs: [Job!]
+  job(id: String!): Job
+  user(id: String!): User
+  company(id: String!): Company
 }
 
 type User {
   id: String!
   fullname: String!
+  job: Job
+  company: Company
+}
+
+type Job {
+  id: String!
+  title: String!
+  description: String!
+}
+
+type Company {
+  id: String!
+  name: String!
+  description: String!
+  availableJobs: [Job!]
 }
