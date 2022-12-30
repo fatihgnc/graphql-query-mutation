@@ -4,6 +4,9 @@ type Query {
   job(id: String!): Job
   user(id: String!): User
   company(id: String!): Company
+  companiesByName(name: String!): [Company!]!
+  jobsByTitle(name: String!): [Job!]!
+  usersByFullname(name: String!): [User!]!
 }
 
 type User {
