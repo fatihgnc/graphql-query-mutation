@@ -17,9 +17,9 @@ export const resolvers = {
     job: (_root, { id }) => getJobById(id),
     user: (_root, { id }) => getUserById(id),
     company: (_root, { id }) => getCompanyById(id),
-    usersByFullname: (_root, { text }) => getUsersByFullname(text),
     jobsByTitle: (_root, { text }) => getJobsByTitle(text),
     companiesByName: (_root, { text }) => getCompaniesByName(text),
+    usersByFullname: (_root, { text }) => getUsersByFullname(text),
   },
   User: {
     company: (user) => {
