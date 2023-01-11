@@ -9,7 +9,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@formkit/auto-animate": "^1.0.0-beta.5",
     "@types/styled-components": "^5.1.26",
     "graphql": "^16.6.0",
     "graphql-request": "^5.1.0",

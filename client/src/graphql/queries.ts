@@ -6,8 +6,8 @@ export async function getAllDataByText(text: string) {
   const query = gql`
     query GetAllDataByText($text: String!) {
       jobsByTitle(text: $text) {
-        description
         id
+        description
         title
       }
       companiesByName(text: $text) {
@@ -21,26 +21,65 @@ export async function getAllDataByText(text: string) {
         }
       }
       usersByFullname(text: $text) {
-        fullname
         id
+        fullname
+        avatar
         company {
           description
           id
           name
           availableJobs {
-            description
             id
+            description
             title
           }
         }
         job {
-          description
           id
+          description
           title
         }
       }
     }
   `;
   const variables = { text };
-  return await request(GRAPHQL_URL, query, variables);
+  // destructure data
+  const {
+    jobsByTitle: jobs,
+    companiesByName: companies,
+    usersByFullname: users,
+  } = await request(GRAPHQL_URL, query, variables);
+  // make data generic so that we can print all of them
+  const data = [...jobs, ...companies, ...users].reduce(
+    (dataByType, currentData) => {
+      // user data
+      if (currentData.fullname) {
+        dataByType.users.push({
+          ...currentData,
+          type: 'user',
+          name: currentData.fullname,
+          description: currentData.job?.title || 'Unemployed',
+        });
+        // company data
+      } else if (currentData.name) {
+        dataByType.companies.push({
+          ...currentData,
+          type: 'company',
+          name: currentData.name,
+          description: currentData.description,
+        });
+        // job data
+      } else {
+        dataByType.jobs.push({
+          ...currentData,
+          type: 'job',
+          name: currentData.title,
+          description: currentData.description,
+        });
+      }
+      return dataByType;
+    },
+    { jobs: [], users: [], companies: [] }
+  );
+  return data;
 }

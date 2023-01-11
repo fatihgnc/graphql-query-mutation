@@ -3,89 +3,75 @@ import styled from 'styled-components';
 import { Outlet } from 'react-router-dom';
 import { IoIosClose } from 'react-icons/io';
 import { AiOutlineSearch } from 'react-icons/ai';
-import { useAutoAnimate } from '@formkit/auto-animate/react';
 
-import { Container } from './hStyled';
 import { getAllDataByText } from '../graphql/queries';
 
-let timeout: number;
+import SearchResults from '../components/SearchResults';
+import { Container } from './hStyled';
+
+const initialData = { companies: [], users: [], jobs: [] };
+const initialState = { text: '', data: initialData, isFetching: false };
 
 export default function Home() {
   const [searchState, setSearchState] = useState<{
     text: string;
-    data: any[];
-  }>({ text: '', data: [] });
-  // const [searchResultsAnimationRef] = useAutoAnimate<HTMLDivElement>({
-  //   duration: 300,
-  //   disrespectUserMotionPreference: true,
-  // });
+    data: { jobs: any[]; users: any[]; companies: any[] };
+    isFetching: boolean;
+  }>(initialState);
 
   useEffect(() => {
     if (searchState.text.trim().length >= 2) {
-      if (timeout) clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        processSearchData();
-      }, 200);
+      performQuery();
     } else {
-      setSearchState({ ...searchState, data: [] });
+      setSearchState({ ...searchState, data: initialData, isFetching: false });
     }
 
-    async function processSearchData() {
+    async function performQuery() {
       try {
-        const { jobsByTitle, companiesByName, usersByFullname } =
-          await getAllDataByText(searchState.text);
-        const processedData = [
-          ...jobsByTitle,
-          ...companiesByName,
-          ...usersByFullname,
-        ].map((data) => ({
-          ...data,
-          name: data.title || data.name || data.fullname,
-          description: data.description || data.job?.title || 'Unemployed',
-        }));
-        setSearchState({ ...searchState, data: processedData });
+        setSearchState((prevState) => ({ ...prevState, isFetching: true }));
+        const data = await getAllDataByText(searchState.text);
+        setSearchState((prevState) => ({ ...prevState, data }));
       } catch (error: any) {
         alert(error.message);
+      } finally {
+        setSearchState((prevState) => ({ ...prevState, isFetching: false }));
       }
     }
   }, [searchState.text]);
 
-  // useEffect(() => {
-  //   console.log(searchState.data);
-  // }, [searchState.data]);
-
-  const onChangeText = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchState({ ...searchState, text: event.target.value });
+  const onClickCloseIcon = () => {
+    setSearchState(initialState);
   };
 
-  const onClickCloseIcon = () => {
-    setSearchState({ ...searchState, text: '' });
+  const onChangeText = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchState((prevState) => ({ ...prevState, text: event.target.value }));
   };
 
   return (
     <Container>
       <SearchInputWrapper>
         <InputGroup>
-          <AiOutlineSearch size={20} />
+          <AiOutlineSearch size={20} style={{ flexShrink: 0 }} />
           <SearchInput
             type='text'
+            value={searchState.text}
             placeholder='Search user, job, company...'
             onChange={onChangeText}
           />
           {searchState.text.length > 0 && (
-            <ClearTextIcon size={24} onClick={onClickCloseIcon} />
+            <ClearTextIcon
+              style={{ cursor: 'pointer' }}
+              size={20}
+              onClick={onClickCloseIcon}
+            />
           )}
         </InputGroup>
-        {!!searchState.data.length && (
-          <SearchResultsWrapper>
-            {searchState.data.map((data) => (
-              <div key={data.id} style={{ cursor: 'pointer' }}>
-                <div>{data.name}</div>
-                <small style={{ color: '#aaa' }}>{data.description}</small>
-              </div>
-            ))}
-          </SearchResultsWrapper>
-        )}
+        {searchState.text.length >= 2 &&
+          (searchState.isFetching ? (
+            <LoadingText>Loading...</LoadingText>
+          ) : (
+            <SearchResults data={searchState.data} text={searchState.text} />
+          ))}
       </SearchInputWrapper>
       <Outlet />
     </Container>
@@ -119,9 +105,7 @@ const SearchInput = styled.input`
   }
 `;
 
-const SearchResultsWrapper = styled.div`
+const LoadingText = styled.p`
   margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  row-gap: 10px;
+  font-size: 14px;
 `;
