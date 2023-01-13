@@ -1,43 +1,38 @@
 import styled from 'styled-components';
 
+import { IJob } from '../types/job.types';
+import { IUser } from '../types/user.types';
+import { ICompany } from '../types/company.types';
+import { TEXTS } from '../utils/constants';
+
 interface ISearchResultsProps {
   text: string;
-  data: { jobs: any[]; users: any[]; companies: any[] };
+  data: { jobs: IJob[]; users: IUser[]; companies: ICompany[] };
 }
 
 export default function SearchResults({ text, data }: ISearchResultsProps) {
   // Check if there is any data.
   // If there isn't any data, return message to display nothing has been found.
-  if (Object.values(data).every((d) => d.length === 0)) {
+  const isDataEmpty = Object.values(data).every((d) => d.length === 0);
+  if (isDataEmpty) {
     return (
-      <NotFoundMessage>No data exists with the term "{text}"</NotFoundMessage>
+      <ErrorText>
+        No data exists with the term <b>"{text}"</b> in our servers.
+      </ErrorText>
     );
   }
 
   return (
-    <>
-      {data.jobs.length > 0 && (
-        <>
-          <DataCategory>Jobs</DataCategory>
-          <SearchResultsWrapper>
-            {data.jobs.map((data) => (
-              <DataWrapper key={data.id}>
-                <div>{data.name}</div>
-                <small style={{ color: '#aaa' }}>{data.description}</small>
-              </DataWrapper>
-            ))}
-          </SearchResultsWrapper>
-        </>
-      )}
+    <ResultsContainer>
       {data.users.length > 0 && (
         <>
-          <DataCategory>Users</DataCategory>
+          <DataCategory>{TEXTS.USERS_HEADER}</DataCategory>
           <SearchResultsWrapper>
             {data.users.map((data) => (
               <UserWrapper key={data.id}>
                 <Avatar src={data.avatar} />
                 <div>
-                  <div>{data.name}</div>
+                  <DataHeader>{data.name}</DataHeader>
                   <small style={{ color: '#aaa' }}>{data.description}</small>
                 </div>
               </UserWrapper>
@@ -45,22 +40,61 @@ export default function SearchResults({ text, data }: ISearchResultsProps) {
           </SearchResultsWrapper>
         </>
       )}
-      {data.companies.length > 0 && (
+      {data.jobs.length > 0 && (
         <>
-          <DataCategory>Companies</DataCategory>
+          <DataCategory>{TEXTS.JOBS_HEADER}</DataCategory>
           <SearchResultsWrapper>
-            {data.companies.map((data) => (
+            {data.jobs.map((data) => (
               <DataWrapper key={data.id}>
-                <div>{data.name}</div>
+                <DataHeader>{data.name}</DataHeader>
                 <small style={{ color: '#aaa' }}>{data.description}</small>
               </DataWrapper>
             ))}
           </SearchResultsWrapper>
         </>
       )}
-    </>
+      {data.companies.length > 0 && (
+        <>
+          <DataCategory>{TEXTS.COMPANIES_HEADER}</DataCategory>
+          <SearchResultsWrapper>
+            {data.companies.map((data) => (
+              <DataWrapper key={data.id}>
+                <DataHeader>{data.name}</DataHeader>
+                <small style={{ color: '#aaa' }}>{data.description}</small>
+              </DataWrapper>
+            ))}
+          </SearchResultsWrapper>
+        </>
+      )}
+    </ResultsContainer>
   );
 }
+
+const ResultsContainer = styled.div`
+  max-height: 600px;
+  overflow-y: auto;
+  margin-top: 15px;
+
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(90, 90, 90);
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+  }
+`;
+
+const DataHeader = styled.h4`
+  font-size: 16px;
+  font-weight: 500;
+`;
 
 const SearchResultsWrapper = styled.div`
   display: flex;
@@ -92,13 +126,14 @@ const UserWrapper = styled.div`
   column-gap: 10px;
 `;
 
-const NotFoundMessage = styled.p`
+export const ErrorText = styled.p`
   margin-top: 20px;
   padding: 10px 16px;
   background-color: rgba(255, 0, 0, 0.05);
   border-left: thick solid rgba(255, 0, 0, 0.2);
   font-size: 14px;
   line-height: 20px;
+  word-break: break-all;
 `;
 
 const DataWrapper = styled.div`

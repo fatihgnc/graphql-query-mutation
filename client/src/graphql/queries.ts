@@ -1,8 +1,9 @@
 import { gql, request } from 'graphql-request';
 
-const GRAPHQL_URL = 'http://localhost:4000/graphql';
+import { GRAPHQL_URL } from '../utils/constants';
 
 export async function getAllDataByText(text: string) {
+  // graphql query to be sent to server
   const query = gql`
     query GetAllDataByText($text: String!) {
       jobsByTitle(text: $text) {
@@ -42,6 +43,7 @@ export async function getAllDataByText(text: string) {
       }
     }
   `;
+  // query variable
   const variables = { text };
   // destructure data
   const {
@@ -49,27 +51,27 @@ export async function getAllDataByText(text: string) {
     companiesByName: companies,
     usersByFullname: users,
   } = await request(GRAPHQL_URL, query, variables);
-  // make data generic so that we can print all of them
+  // make data generic so that we can print all of them in once
   const data = [...jobs, ...companies, ...users].reduce(
     (dataByType, currentData) => {
-      // user data
       if (currentData.fullname) {
+        // user data
         dataByType.users.push({
           ...currentData,
           type: 'user',
           name: currentData.fullname,
           description: currentData.job?.title || 'Unemployed',
         });
-        // company data
       } else if (currentData.name) {
+        // company data
         dataByType.companies.push({
           ...currentData,
           type: 'company',
           name: currentData.name,
           description: currentData.description,
         });
-        // job data
       } else {
+        // job data
         dataByType.jobs.push({
           ...currentData,
           type: 'job',
