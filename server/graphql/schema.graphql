@@ -1,6 +1,7 @@
 type Query {
   users: [User!]
   jobs: [Job!]
+  companies: [Company!]
   job(id: String!): Job
   user(id: String!): User
   company(id: String!): Company
@@ -12,8 +13,8 @@ type Query {
 type User {
   id: String!
   fullname: String!
-  job: Job
-  company: Company
+  job: Job!
+  company: Company!
   avatar: String!
 }
 

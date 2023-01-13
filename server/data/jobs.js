@@ -1,43 +1,190 @@
+import { faker } from '@faker-js/faker';
+
 export const jobs = [
   {
-    id: 'job_1',
-    title: 'Frontend Developer',
-    description: 'We are looking for a Frontend Developer familiar with React.',
+    id: 'j' + Math.random().toString(16).slice(2),
+    title: faker.name.jobTitle(),
+    description: faker.commerce.productDescription(),
   },
   {
-    id: 'job_2',
-    title: 'Backend Developer',
-    description:
-      'We are looking for a Backend Developer familiar with Node.js and Express.',
+    id: 'j' + Math.random().toString(16).slice(2),
+    title: faker.name.jobTitle(),
+    description: faker.commerce.productDescription(),
   },
   {
-    id: 'job_3',
-    title: 'Full-Stack Developer',
-    description:
-      'We are looking for a Full-Stack Developer familiar with Node.js, Express, and React.',
+    id: 'j' + Math.random().toString(16).slice(2),
+    title: faker.name.jobTitle(),
+    description: faker.commerce.productDescription(),
   },
   {
-    id: 'job_4',
-    title: 'Data Engineer',
-    description:
-      'We are looking for a Data Engineer familiar with Python, tensorflow etc.',
+    id: 'j' + Math.random().toString(16).slice(2),
+    title: faker.name.jobTitle(),
+    description: faker.commerce.productDescription(),
   },
   {
-    id: 'job_5',
-    title: 'UI/UX Designer',
-    description:
-      'We are looking for a UI/UX Designer familiar with Figma, Adobe Photoshop etc.',
+    id: 'j' + Math.random().toString(16).slice(2),
+    title: faker.name.jobTitle(),
+    description: faker.commerce.productDescription(),
   },
   {
-    id: 'job_6',
-    title: 'Test Engineer',
-    description:
-      'We are looking for a Test Engineer familiar with Jest, Mocha, Unit, E2E, Integration Tests etc.',
+    id: 'j' + Math.random().toString(16).slice(2),
+    title: faker.name.jobTitle(),
+    description: faker.commerce.productDescription(),
   },
   {
-    id: 'job_7',
-    title: 'Database Engineer',
-    description:
-      'We are looking for a Database Engineer familiar with NoSQL and SQL databases.',
+    id: 'j' + Math.random().toString(16).slice(2),
+    title: faker.name.jobTitle(),
+    description: faker.commerce.productDescription(),
+  },
+  {
+    id: 'j' + Math.random().toString(16).slice(2),
+    title: faker.name.jobTitle(),
+    description: faker.commerce.productDescription(),
+  },
+  {
+    id: 'j' + Math.random().toString(16).slice(2),
+    title: faker.name.jobTitle(),
+    description: faker.commerce.productDescription(),
+  },
+  {
+    id: 'j' + Math.random().toString(16).slice(2),
+    title: faker.name.jobTitle(),
+    description: faker.commerce.productDescription(),
+  },
+  {
+    id: 'j' + Math.random().toString(16).slice(2),
+    title: faker.name.jobTitle(),
+    description: faker.commerce.productDescription(),
+  },
+  {
+    id: 'j' + Math.random().toString(16).slice(2),
+    title: faker.name.jobTitle(),
+    description: faker.commerce.productDescription(),
+  },
+  {
+    id: 'j' + Math.random().toString(16).slice(2),
+    title: faker.name.jobTitle(),
+    description: faker.commerce.productDescription(),
+  },
+  {
+    id: 'j' + Math.random().toString(16).slice(2),
+    title: faker.name.jobTitle(),
+    description: faker.commerce.productDescription(),
+  },
+  {
+    id: 'j' + Math.random().toString(16).slice(2),
+    title: faker.name.jobTitle(),
+    description: faker.commerce.productDescription(),
+  },
+  {
+    id: 'j' + Math.random().toString(16).slice(2),
+    title: faker.name.jobTitle(),
+    description: faker.commerce.productDescription(),
+  },
+  {
+    id: 'j' + Math.random().toString(16).slice(2),
+    title: faker.name.jobTitle(),
+    description: faker.commerce.productDescription(),
+  },
+  {
+    id: 'j' + Math.random().toString(16).slice(2),
+    title: faker.name.jobTitle(),
+    description: faker.commerce.productDescription(),
+  },
+  {
+    id: 'j' + Math.random().toString(16).slice(2),
+    title: faker.name.jobTitle(),
+    description: faker.commerce.productDescription(),
+  },
+  {
+    id: 'j' + Math.random().toString(16).slice(2),
+    title: faker.name.jobTitle(),
+    description: faker.commerce.productDescription(),
+  },
+  {
+    id: 'j' + Math.random().toString(16).slice(2),
+    title: faker.name.jobTitle(),
+    description: faker.commerce.productDescription(),
+  },
+  {
+    id: 'j' + Math.random().toString(16).slice(2),
+    title: faker.name.jobTitle(),
+    description: faker.commerce.productDescription(),
+  },
+  {
+    id: 'j' + Math.random().toString(16).slice(2),
+    title: faker.name.jobTitle(),
+    description: faker.commerce.productDescription(),
+  },
+  {
+    id: 'j' + Math.random().toString(16).slice(2),
+    title: faker.name.jobTitle(),
+    description: faker.commerce.productDescription(),
+  },
+  {
+    id: 'j' + Math.random().toString(16).slice(2),
+    title: faker.name.jobTitle(),
+    description: faker.commerce.productDescription(),
+  },
+  {
+    id: 'j' + Math.random().toString(16).slice(2),
+    title: faker.name.jobTitle(),
+    description: faker.commerce.productDescription(),
+  },
+  {
+    id: 'j' + Math.random().toString(16).slice(2),
+    title: faker.name.jobTitle(),
+    description: faker.commerce.productDescription(),
+  },
+  {
+    id: 'j' + Math.random().toString(16).slice(2),
+    title: faker.name.jobTitle(),
+    description: faker.commerce.productDescription(),
+  },
+  {
+    id: 'j' + Math.random().toString(16).slice(2),
+    title: faker.name.jobTitle(),
+    description: faker.commerce.productDescription(),
+  },
+  {
+    id: 'j' + Math.random().toString(16).slice(2),
+    title: faker.name.jobTitle(),
+    description: faker.commerce.productDescription(),
+  },
+  {
+    id: 'j' + Math.random().toString(16).slice(2),
+    title: faker.name.jobTitle(),
+    description: faker.commerce.productDescription(),
+  },
+  {
+    id: 'j' + Math.random().toString(16).slice(2),
+    title: faker.name.jobTitle(),
+    description: faker.commerce.productDescription(),
+  },
+  {
+    id: 'j' + Math.random().toString(16).slice(2),
+    title: faker.name.jobTitle(),
+    description: faker.commerce.productDescription(),
+  },
+  {
+    id: 'j' + Math.random().toString(16).slice(2),
+    title: faker.name.jobTitle(),
+    description: faker.commerce.productDescription(),
   },
 ];
+
+export const pickRandomJob = () => {
+  const randomJobIndex = Math.floor(Math.random() * jobs.length);
+  return jobs[randomJobIndex].id;
+};
+
+export const pickMultipleRandomJobs = (amount = 4) => {
+  const data = [];
+  const clonedJobs = [...jobs];
+  for (let index = 0; index < amount; index++) {
+    const randomJobIndex = Math.floor(Math.random() * clonedJobs.length);
+    data.push(clonedJobs[randomJobIndex].id);
+    clonedJobs.splice(randomJobIndex, 1);
+  }
+  return data;
+};

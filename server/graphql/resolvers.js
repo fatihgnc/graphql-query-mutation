@@ -1,6 +1,4 @@
 import {
-  getUsers,
-  getJobs,
   getJobById,
   getUserById,
   getCompanyById,
@@ -8,12 +6,16 @@ import {
   getCompaniesByName,
   getUsersByFullname,
   getJobsByTitle,
+  getAllJobs,
+  getAllUsers,
+  getAllCompanies,
 } from '../utils/queries.js';
 
 export const resolvers = {
   Query: {
-    jobs: () => getJobs(),
-    users: () => getUsers(),
+    jobs: () => getAllJobs(),
+    users: () => getAllUsers(),
+    companies: () => getAllCompanies(),
     job: (_root, { id }) => getJobById(id),
     user: (_root, { id }) => getUserById(id),
     company: (_root, { id }) => getCompanyById(id),
