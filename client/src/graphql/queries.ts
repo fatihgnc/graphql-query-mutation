@@ -1,17 +1,21 @@
-import { gql, request } from 'graphql-request';
-
+import { ApolloClient, gql, InMemoryCache } from '@apollo/client';
 import { GRAPHQL_URL } from '../utils/constants';
+
+const client = new ApolloClient({
+  uri: GRAPHQL_URL,
+  cache: new InMemoryCache(),
+});
 
 export async function getAllDataByText(text: string) {
   // graphql query to be sent to server
   const query = gql`
     query GetAllDataByText($text: String!) {
-      jobsByTitle(text: $text) {
+      jobs: jobsByTitle(text: $text) {
         id
         description
         title
       }
-      companiesByName(text: $text) {
+      companies: companiesByName(text: $text) {
         id
         name
         description
@@ -21,7 +25,7 @@ export async function getAllDataByText(text: string) {
           title
         }
       }
-      usersByFullname(text: $text) {
+      users: usersByFullname(text: $text) {
         id
         fullname
         avatar
@@ -35,11 +39,6 @@ export async function getAllDataByText(text: string) {
             title
           }
         }
-        job {
-          id
-          description
-          title
-        }
       }
     }
   `;
@@ -47,10 +46,8 @@ export async function getAllDataByText(text: string) {
   const variables = { text };
   // destructure data
   const {
-    jobsByTitle: jobs,
-    companiesByName: companies,
-    usersByFullname: users,
-  } = await request(GRAPHQL_URL, query, variables);
+    data: { jobs, companies, users },
+  } = await client.query({ query, variables });
   // make data generic so that we can print all of them in once
   const data = [...jobs, ...companies, ...users].reduce(
     (dataByType, currentData) => {
