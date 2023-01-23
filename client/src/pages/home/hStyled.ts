@@ -41,8 +41,25 @@ export const InputGroup = styled.div`
 export const SearchInputWrapper = styled.div`
   padding: 16px 24px;
   border: thin solid #444;
-  border-radius: 12px;
+  border-radius: 6px;
   min-height: 58px;
+  max-height: 95%;
+  overflow-y: auto;
+
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(90, 90, 90);
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+  }
 `;
 
 export const SearchInput = styled.input`

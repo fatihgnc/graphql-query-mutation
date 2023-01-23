@@ -71,24 +71,7 @@ export default function SearchResults({ text, data }: ISearchResultsProps) {
 }
 
 const ResultsContainer = styled.div`
-  max-height: 600px;
-  overflow-y: auto;
-  margin-top: 15px;
-
-  ::-webkit-scrollbar {
-    width: 5px;
-    height: 5px;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: rgba(90, 90, 90);
-    border-radius: 10px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-  }
+  height: 100%;
 `;
 
 const DataHeader = styled.h4`
