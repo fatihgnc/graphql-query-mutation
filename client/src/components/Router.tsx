@@ -1,11 +1,17 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Home from '../pages/home';
+
+import MainLayout from '../layouts/main';
+import QueriesPage from '../pages/queries';
+import MutationsPage from '../pages/mutations';
 
 export default function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Home />} />
+        <Route path='/' element={<MainLayout />}>
+          <Route path='queries' element={<QueriesPage />} />
+          <Route path='mutations' element={<MutationsPage />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

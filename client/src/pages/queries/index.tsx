@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { RotatingLines } from 'react-loader-spinner';
 import { AiOutlineSearch } from 'react-icons/ai';
 
@@ -10,19 +10,17 @@ import { getAllDataByText } from '../../graphql/queries';
 
 import SearchResults, { ErrorText } from '../../components/SearchResults';
 import {
-  ClearTextIcon,
-  Container,
-  HeaderText,
-  HeaderWrapper,
   InputGroup,
   SearchInput,
-  SearchInputWrapper,
+  ClearTextIcon,
   SpinnerWrapper,
-} from './hStyled';
+  QueriesContainer,
+} from '../../layouts/main/hStyled';
 
 const initialData = { companies: [], users: [], jobs: [] };
 const initialState = {
   text: '',
+  queryErrorText: '',
   data: initialData,
   isFetching: false,
   renderResults: false,
@@ -30,17 +28,20 @@ const initialState = {
 
 let queryTimeout: number;
 
-export default function Home() {
-  const [queryErrorText, setQueryErrorText] = useState('');
+export default function QueriesPage() {
   const [searchState, setSearchState] = useState<{
     text: string;
+    queryErrorText: string;
     isFetching: boolean;
     renderResults: boolean;
     data: { jobs: IJob[]; users: IUser[]; companies: ICompany[] };
   }>(initialState);
 
   useEffect(() => {
-    setQueryErrorText('');
+    setSearchState({
+      ...searchState,
+      queryErrorText: '',
+    });
     // perform query if text is longer than 2 chars on every key stroke.
     if (searchState.text.trim().length >= 2) {
       // clear timeout so spinner keeps spinning while typing
@@ -67,7 +68,10 @@ export default function Home() {
         const data = await getAllDataByText(searchState.text);
         setSearchState((prevState) => ({ ...prevState, data }));
       } catch (error: any) {
-        setQueryErrorText(error.message);
+        setSearchState({
+          ...searchState,
+          queryErrorText: error.message,
+        });
       } finally {
         // store timeout in a variable so it can be cleared while typing
         queryTimeout = setTimeout(() => {
@@ -90,45 +94,39 @@ export default function Home() {
   };
 
   return (
-    <Container>
-      <HeaderWrapper>
-        <img src='https://graphql.org/img/logo.svg' width={40} />
-        <HeaderText>{TEXTS.MAIN_HEADER}</HeaderText>
-      </HeaderWrapper>
-      <SearchInputWrapper>
-        <InputGroup>
-          <AiOutlineSearch size={20} style={{ flexShrink: 0 }} />
-          <SearchInput
-            type='text'
-            value={searchState.text}
-            placeholder={TEXTS.INPUT_PLACEHOLDER}
-            onChange={onChangeText}
+    <QueriesContainer>
+      <InputGroup>
+        <AiOutlineSearch size={20} style={{ flexShrink: 0 }} />
+        <SearchInput
+          type='text'
+          value={searchState.text}
+          placeholder={TEXTS.INPUT_PLACEHOLDER}
+          onChange={onChangeText}
+        />
+        {searchState.text.length > 0 && (
+          <ClearTextIcon
+            size={20}
+            style={{ cursor: 'pointer' }}
+            onClick={onClickCloseIcon}
           />
-          {searchState.text.length > 0 && (
-            <ClearTextIcon
-              size={20}
-              style={{ cursor: 'pointer' }}
-              onClick={onClickCloseIcon}
-            />
-          )}
-        </InputGroup>
-        {searchState.text.length >= 2 && queryErrorText ? (
-          <ErrorText>{queryErrorText}</ErrorText>
-        ) : searchState.renderResults ? (
-          <SearchResults data={searchState.data} text={searchState.text} />
-        ) : (
-          searchState.isFetching && (
-            <SpinnerWrapper>
-              <RotatingLines
-                width='24'
-                strokeWidth='5'
-                strokeColor='grey'
-                animationDuration='1'
-              />
-            </SpinnerWrapper>
-          )
         )}
-      </SearchInputWrapper>
-    </Container>
+      </InputGroup>
+      {searchState.text.length >= 2 && searchState.queryErrorText ? (
+        <ErrorText>{searchState.queryErrorText}</ErrorText>
+      ) : searchState.renderResults ? (
+        <SearchResults data={searchState.data} text={searchState.text} />
+      ) : (
+        searchState.isFetching && (
+          <SpinnerWrapper>
+            <RotatingLines
+              width='24'
+              strokeWidth='5'
+              strokeColor='grey'
+              animationDuration='1'
+            />
+          </SpinnerWrapper>
+        )
+      )}
+    </QueriesContainer>
   );
 }
