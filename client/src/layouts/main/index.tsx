@@ -1,9 +1,7 @@
 import { useEffect } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
-import { TEXTS } from '../../utils/constants';
-
-import { Container, HeaderText, HeaderWrapper } from './hStyled';
+import { Container, Link, NavbarWrapper, NavFirstLetter } from './hStyled';
 
 export default function MainLayout() {
   const navigate = useNavigate();
@@ -17,14 +15,18 @@ export default function MainLayout() {
 
   return (
     <Container>
-      <HeaderWrapper>
-        <img src='https://graphql.org/img/logo.svg' width={40} />
-        <HeaderText>
-          {pathname.includes('mutations')
-            ? TEXTS.MUTATIONS_HEADER
-            : TEXTS.QUERIES_HEADER}
-        </HeaderText>
-      </HeaderWrapper>
+      <NavbarWrapper>
+        <div>
+          <Link to='queries'>
+            <NavFirstLetter>Q</NavFirstLetter>
+            ueries
+          </Link>
+          <Link to='mutations'>
+            <NavFirstLetter>M</NavFirstLetter>
+            utations
+          </Link>
+        </div>
+      </NavbarWrapper>
       <Outlet />
     </Container>
   );

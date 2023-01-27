@@ -1,4 +1,5 @@
 import { IoIosClose } from 'react-icons/io';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const Container = styled.div`
@@ -13,20 +14,20 @@ export const Container = styled.div`
   }
 `;
 
-export const HeaderWrapper = styled.div`
+export const NavbarWrapper = styled.div`
   display: flex;
-  width: 20vw;
+  flex-direction: column;
+  width: 15vw;
   height: 100vh;
-  align-items: center;
   margin-bottom: 20px;
-  padding: 20px 40px;
   flex-shrink: 0;
-  column-gap: 10px;
-  background-color: orange;
+  row-gap: 20px;
+  background-color: #333;
+  padding: 50px 30px;
 `;
 
 export const HeaderText = styled.h2`
-  color: white;
+  color: orange;
 `;
 
 export const SpinnerWrapper = styled.div`
@@ -46,13 +47,13 @@ export const InputGroup = styled.div`
 export const QueriesContainer = styled.div`
   padding: 16px 24px;
   margin: 30px 50px;
+  width: 80vw;
   min-height: 58px;
   max-height: 95%;
   align-self: flex-start;
   border: thin solid #444;
   border-radius: 6px;
   overflow-y: auto;
-  flex-grow: 1;
 
   ::-webkit-scrollbar {
     width: 5px;
@@ -78,4 +79,23 @@ export const SearchInput = styled.input`
   &::placeholder {
     color: #ccc;
   }
+`;
+
+export const Link = styled(NavLink)`
+  margin-bottom: 20px;
+  display: block;
+  text-decoration: none;
+`;
+
+export const NavFirstLetter = styled.div`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 12px;
+  border: thin solid orange;
+  border-radius: 1px;
+  margin-right: 5px;
+  color: orange;
 `;
