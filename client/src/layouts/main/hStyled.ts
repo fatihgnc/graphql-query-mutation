@@ -2,10 +2,10 @@ import { IoIosClose } from 'react-icons/io';
 import styled from 'styled-components';
 
 export const Container = styled.div`
+  display: flex;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  padding: 50px;
   background-color: #222;
 
   & * {
@@ -15,13 +15,18 @@ export const Container = styled.div`
 
 export const HeaderWrapper = styled.div`
   display: flex;
+  width: 20vw;
+  height: 100vh;
   align-items: center;
-  column-gap: 10px;
   margin-bottom: 20px;
+  padding: 20px 40px;
+  flex-shrink: 0;
+  column-gap: 10px;
+  background-color: orange;
 `;
 
-export const HeaderText = styled.h1`
-  color: pink;
+export const HeaderText = styled.h2`
+  color: white;
 `;
 
 export const SpinnerWrapper = styled.div`
@@ -38,13 +43,16 @@ export const InputGroup = styled.div`
   column-gap: 10px;
 `;
 
-export const SearchInputWrapper = styled.div`
+export const QueriesContainer = styled.div`
   padding: 16px 24px;
-  border: thin solid #444;
-  border-radius: 6px;
+  margin: 30px 50px;
   min-height: 58px;
   max-height: 95%;
+  align-self: flex-start;
+  border: thin solid #444;
+  border-radius: 6px;
   overflow-y: auto;
+  flex-grow: 1;
 
   ::-webkit-scrollbar {
     width: 5px;
