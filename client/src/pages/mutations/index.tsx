@@ -1,3 +1,3 @@
 export default function MutationsPage() {
-  return <>Mutations</>;
+  return <div style={{ width: '80vw' }}>Mutations</div>;
 }
