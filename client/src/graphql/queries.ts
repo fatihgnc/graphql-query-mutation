@@ -29,6 +29,9 @@ export async function getAllDataByText(text: string) {
         id
         fullname
         avatar
+        job {
+          title
+        }
         company {
           description
           id
