@@ -6,7 +6,6 @@ import { IJob } from '../../types/job.types';
 import { IUser } from '../../types/user.types';
 import { TEXTS } from '../../utils/constants';
 import { ICompany } from '../../types/company.types';
-import { getAllDataByText } from '../../graphql/queries';
 
 import SearchResults, { ErrorText } from '../../components/SearchResults';
 import {
@@ -16,6 +15,7 @@ import {
   SpinnerWrapper,
   QueriesContainer,
 } from '../../layouts/main/hStyled';
+import { useGetDataByText } from '../../graphql/hooks/queries';
 
 const initialData = { companies: [], users: [], jobs: [] };
 const initialState = {
@@ -32,10 +32,11 @@ export default function QueriesPage() {
   const [searchState, setSearchState] = useState<{
     text: string;
     queryErrorText: string;
-    isFetching: boolean;
     renderResults: boolean;
     data: { jobs: IJob[]; users: IUser[]; companies: ICompany[] };
   }>(initialState);
+
+  const { onPerformQuery, error, loading } = useGetDataByText(searchState.text);
 
   useEffect(() => {
     setSearchState({
@@ -52,7 +53,6 @@ export default function QueriesPage() {
       setSearchState({
         ...searchState,
         data: initialData,
-        isFetching: false,
         renderResults: false,
       });
     }
@@ -65,7 +65,9 @@ export default function QueriesPage() {
         renderResults: false,
       }));
       try {
-        const data = await getAllDataByText(searchState.text);
+        const data = await onPerformQuery();
+        console.log(data);
+
         setSearchState((prevState) => ({ ...prevState, data }));
       } catch (error: any) {
         setSearchState({
@@ -84,6 +86,10 @@ export default function QueriesPage() {
       }
     }
   }, [searchState.text]);
+
+  if (error) {
+    return <p>Something went wrong...</p>;
+  }
 
   const onClickCloseIcon = () => {
     setSearchState(initialState);
@@ -116,7 +122,7 @@ export default function QueriesPage() {
       ) : searchState.renderResults ? (
         <SearchResults data={searchState.data} text={searchState.text} />
       ) : (
-        searchState.isFetching && (
+        loading && (
           <SpinnerWrapper>
             <RotatingLines
               width='24'
