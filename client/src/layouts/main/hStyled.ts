@@ -14,16 +14,21 @@ export const Container = styled.div`
   }
 `;
 
-export const NavbarWrapper = styled.div`
+export const NavbarWrapper = styled.div.attrs(
+  (props: { width: number }) => props
+)`
   display: flex;
   flex-direction: column;
-  width: 15vw;
+  justify-content: center;
+  align-items: center;
+  width: ${({ width }) => width + 'vw'};
   height: 100vh;
   margin-bottom: 20px;
-  flex-shrink: 0;
+  padding-inline: 20px;
   row-gap: 20px;
+  transition: width 250ms ease-in-out;
+  flex-shrink: 0;
   background-color: #333;
-  padding: 50px 30px;
 `;
 
 export const HeaderText = styled.h2`
@@ -47,12 +52,12 @@ export const InputGroup = styled.div`
 export const QueriesContainer = styled.div`
   padding: 16px 24px;
   margin: 30px 50px;
-  width: 80vw;
   min-height: 58px;
   max-height: 95%;
   align-self: flex-start;
   border: thin solid #444;
   border-radius: 6px;
+  flex-grow: 1;
   overflow-y: auto;
 
   ::-webkit-scrollbar {
@@ -95,7 +100,7 @@ export const NavFirstLetter = styled.div`
   height: 30px;
   padding: 12px;
   border: thin solid orange;
-  border-radius: 1px;
-  margin-right: 5px;
+  border-radius: 6px;
   color: orange;
+  font-weight: 700;
 `;

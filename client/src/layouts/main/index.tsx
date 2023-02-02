@@ -1,9 +1,14 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+
+import { BsArrowLeftCircleFill, BsArrowRightCircleFill } from 'react-icons/bs';
 
 import { Container, Link, NavbarWrapper, NavFirstLetter } from './hStyled';
 
 export default function MainLayout() {
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
@@ -13,17 +18,28 @@ export default function MainLayout() {
     }
   }, []);
 
+  const onToggleSidebar = () => {
+    setIsSidebarCollapsed(!isSidebarCollapsed);
+  };
+
   return (
     <Container>
-      <NavbarWrapper>
+      <NavbarWrapper width={isSidebarCollapsed ? 5 : 10}>
+        <MenuToggler onClick={onToggleSidebar}>
+          {isSidebarCollapsed ? (
+            <BsArrowRightCircleFill size={20} fill='#ccc' />
+          ) : (
+            <BsArrowLeftCircleFill size={20} fill='#ccc' />
+          )}
+        </MenuToggler>
         <div>
           <Link to='queries'>
             <NavFirstLetter>Q</NavFirstLetter>
-            ueries
+            {!isSidebarCollapsed && 'ueries'}
           </Link>
           <Link to='mutations'>
             <NavFirstLetter>M</NavFirstLetter>
-            utations
+            {!isSidebarCollapsed && 'utations'}
           </Link>
         </div>
       </NavbarWrapper>
@@ -31,3 +47,15 @@ export default function MainLayout() {
     </Container>
   );
 }
+
+const MenuToggler = styled.div`
+  display: grid;
+  place-items: center;
+  padding: 5px;
+  border-radius: 50%;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #555;
+  }
+`;
