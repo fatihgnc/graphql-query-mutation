@@ -17,6 +17,7 @@ export const Container = styled.div`
 export const NavbarWrapper = styled.div.attrs(
   (props: { width: number }) => props
 )`
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -99,8 +100,8 @@ export const NavFirstLetter = styled.div`
   width: 30px;
   height: 30px;
   padding: 12px;
-  border: thin solid orange;
+  border: thin solid #765;
   border-radius: 6px;
-  color: orange;
-  font-weight: 700;
+  color: #875;
+  font-size: 14px;
 `;

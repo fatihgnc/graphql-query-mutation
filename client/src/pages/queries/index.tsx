@@ -14,7 +14,7 @@ import {
   ClearTextIcon,
   SpinnerWrapper,
   QueriesContainer,
-} from '../../layouts/main/hStyled';
+} from '../../layouts/main/iStyled';
 import { useGetDataByText } from '../../graphql/hooks/queries';
 
 const initialData = { companies: [], users: [], jobs: [] };
